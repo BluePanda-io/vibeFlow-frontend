@@ -177,7 +177,6 @@ const ConnectTGPage: NextPageWithLayout = () => {
         >
           <option value="ENERGY">Energy</option>
           <option value="HAPPINESS">Happiness</option>
-          <option value="PRODUCTIVITY">Productivity</option>
           <option value="STRESS">Stress</option>
         </select>
       </div>
