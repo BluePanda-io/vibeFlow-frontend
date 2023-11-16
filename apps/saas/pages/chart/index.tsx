@@ -207,7 +207,9 @@ const ConnectTGPage: NextPageWithLayout = () => {
       {/* ------------------- Date Picker -------------- */}
 
       {/* ------------------- Chart -------------- */}
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", paddingBottom: "50px" }}
+      >
         {chartData && chartData?.labels?.length > 0 && (
           <Bar
             data={chartData}
