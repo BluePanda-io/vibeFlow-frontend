@@ -1,10 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { UserContext } from "@eden/package-context";
-import { AppUserLayout, SaasUserLayout } from "@eden/package-ui";
+import { AppUserLayout, Button, SaasUserLayout } from "@eden/package-ui";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { IncomingMessage, ServerResponse } from "http";
-import { getSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import React, { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -174,87 +173,104 @@ const ConnectTGPage: NextPageWithLayout = () => {
   return (
     <>
       <AppUserLayout>
-        {/* ------------------- Chart Points -------------- */}
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <label style={{ marginRight: "10px" }}>Chart Points:</label>
-          <input
-            id="chartPoints"
-            type="range"
-            min="1"
-            max={numberChartPointsMax}
-            value={numberChartPoints}
-            onChange={(e) => setNumberChartPoints(Number(e.target.value))}
-            className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          />
-          <label style={{ marginLeft: "10px" }}>{numberChartPoints}</label>
-        </div>
-        {/* ------------------- Chart Points -------------- */}
-
-        {/* ------------------- Type Chart -------------- */}
-        <div>
-          <label style={{ marginRight: "10px" }}>Select Values:</label>
-          <select
-            className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-6 rounded"
-            value={selectedValues}
-            onChange={(e) => setSelectedValues(e.target.value)}
+        {currentUser?._id === undefined ? (
+          <div
+            className="col-span-4 flex items-center justify-center"
+            style={{ marginTop: "50px" }}
           >
-            <option value="ENERGY">Energy</option>
-            <option value="HAPPINESS">Happiness</option>
-            <option value="STRESS">Stress</option>
-          </select>
-        </div>
-        {/* ------------------- Type Chart -------------- */}
-
-        {/* ------------------- Date Picker -------------- */}
-        <div>
-          <label style={{ marginRight: "10px" }}>Min Date:</label>
-          <input
-            type="date"
-            value={minDate}
-            min={minDateTotalUser}
-            max={maxDateTotalUser}
-            onChange={(e) => setMinDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label style={{ marginRight: "10px" }}>Max Date:</label>
-          <input
-            type="date"
-            value={maxDate}
-            min={minDateTotalUser}
-            max={maxDateTotalUser}
-            onChange={(e) => setMaxDate(e.target.value)}
-          />
-        </div>
-        {/* ------------------- Date Picker -------------- */}
-
-        {/* ------------------- Chart -------------- */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            paddingBottom: "50px",
-          }}
-        >
-          {chartData && chartData?.labels?.length > 0 && (
-            <Bar
-              // <Chart
-              data={chartData}
-              width={100}
-              height={600}
-              options={{
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    min: 0,
-                    max: 10,
-                  },
-                },
+            <Button
+              onClick={() => {
+                signIn("google", { callbackUrl: "/chart" });
               }}
-            />
-          )}
-        </div>
-        {/* ------------------- Chart -------------- */}
+            >
+              Log in with Google
+            </Button>
+          </div>
+        ) : (
+          <>
+            {/* ------------------- Chart Points -------------- */}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label style={{ marginRight: "10px" }}>Chart Points:</label>
+              <input
+                id="chartPoints"
+                type="range"
+                min="1"
+                max={numberChartPointsMax}
+                value={numberChartPoints}
+                onChange={(e) => setNumberChartPoints(Number(e.target.value))}
+                className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              />
+              <label style={{ marginLeft: "10px" }}>{numberChartPoints}</label>
+            </div>
+            {/* ------------------- Chart Points -------------- */}
+
+            {/* ------------------- Type Chart -------------- */}
+            <div>
+              <label style={{ marginRight: "10px" }}>Select Values:</label>
+              <select
+                className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-6 rounded"
+                value={selectedValues}
+                onChange={(e) => setSelectedValues(e.target.value)}
+              >
+                <option value="ENERGY">Energy</option>
+                <option value="HAPPINESS">Happiness</option>
+                <option value="STRESS">Stress</option>
+              </select>
+            </div>
+            {/* ------------------- Type Chart -------------- */}
+
+            {/* ------------------- Date Picker -------------- */}
+            <div>
+              <label style={{ marginRight: "10px" }}>Min Date:</label>
+              <input
+                type="date"
+                value={minDate}
+                min={minDateTotalUser}
+                max={maxDateTotalUser}
+                onChange={(e) => setMinDate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label style={{ marginRight: "10px" }}>Max Date:</label>
+              <input
+                type="date"
+                value={maxDate}
+                min={minDateTotalUser}
+                max={maxDateTotalUser}
+                onChange={(e) => setMaxDate(e.target.value)}
+              />
+            </div>
+            {/* ------------------- Date Picker -------------- */}
+
+            {/* ------------------- Chart -------------- */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                paddingBottom: "50px",
+              }}
+            >
+              {chartData && chartData?.labels?.length > 0 && (
+                <Bar
+                  // <Chart
+                  data={chartData}
+                  width={100}
+                  height={600}
+                  options={{
+                    maintainAspectRatio: false,
+                    scales: {
+                      y: {
+                        min: 0,
+                        max: 10,
+                      },
+                    },
+                  }}
+                />
+              )}
+            </div>
+            {/* ------------------- Chart -------------- */}
+          </>
+        )}
       </AppUserLayout>
     </>
   );
@@ -263,81 +279,3 @@ const ConnectTGPage: NextPageWithLayout = () => {
 ConnectTGPage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
 
 export default ConnectTGPage;
-
-export async function getServerSideProps(ctx: {
-  req: IncomingMessage;
-  res: ServerResponse;
-  query: { slug: string };
-}) {
-  const session = await getSession(ctx);
-
-  const url = ctx.req.url;
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/?redirect=${url}`,
-        permanent: false,
-      },
-    };
-  }
-
-  if (session.accessLevel === 5) {
-    return {
-      props: { key: url },
-    };
-  }
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTH_URL}/auth/company-auth`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        userID: session.user!.id,
-        companySlug: ctx.query.slug,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-
-  console.log(res.status);
-
-  if (res.status === 401) {
-    return {
-      redirect: {
-        destination: `/request-access?company=${ctx.query.slug}`,
-        permanent: false,
-      },
-    };
-  }
-
-  if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/create-company`,
-        permanent: false,
-      },
-    };
-  }
-
-  const _companyAuth = await res.json();
-
-  if (
-    res.status === 200 &&
-    _companyAuth.company.type !== "COMMUNITY" &&
-    (!_companyAuth.company.stripe ||
-      !_companyAuth.company.stripe.product ||
-      !_companyAuth.company.stripe.product.ID)
-  ) {
-    return {
-      redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard/subscription`,
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { key: url },
-  };
-}
