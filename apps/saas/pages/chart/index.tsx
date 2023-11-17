@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { SaasUserLayout } from "@eden/package-ui";
+import { AppUserLayout, SaasUserLayout } from "@eden/package-ui";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
 import React, { useState } from "react";
@@ -151,82 +151,88 @@ const ConnectTGPage: NextPageWithLayout = () => {
 
   return (
     <>
-      {/* ------------------- Chart Points -------------- */}
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <label style={{ marginRight: "10px" }}>Chart Points 2:</label>
-        <input
-          id="chartPoints"
-          type="range"
-          min="1"
-          max="30"
-          value={numberChartPoints}
-          onChange={(e) => setNumberChartPoints(Number(e.target.value))}
-          className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        />
-        <label style={{ marginLeft: "10px" }}>{numberChartPoints}</label>
-      </div>
-      {/* ------------------- Chart Points -------------- */}
-
-      {/* ------------------- Type Chart -------------- */}
-      <div>
-        <label style={{ marginRight: "10px" }}>Select Values:</label>
-        <select
-          className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-6 rounded"
-          value={selectedValues}
-          onChange={(e) => setSelectedValues(e.target.value)}
-        >
-          <option value="ENERGY">Energy</option>
-          <option value="HAPPINESS">Happiness</option>
-          <option value="STRESS">Stress</option>
-        </select>
-      </div>
-      {/* ------------------- Type Chart -------------- */}
-
-      {/* ------------------- Date Picker -------------- */}
-      <div>
-        <label style={{ marginRight: "10px" }}>Min Date:</label>
-        <input
-          type="date"
-          value={minDate}
-          min={minDateTotalUser}
-          max={maxDateTotalUser}
-          onChange={(e) => setMinDate(e.target.value)}
-        />
-      </div>
-      <div>
-        <label style={{ marginRight: "10px" }}>Max Date:</label>
-        <input
-          type="date"
-          value={maxDate}
-          min={minDateTotalUser}
-          max={maxDateTotalUser}
-          onChange={(e) => setMaxDate(e.target.value)}
-        />
-      </div>
-      {/* ------------------- Date Picker -------------- */}
-
-      {/* ------------------- Chart -------------- */}
-      <div
-        style={{ display: "flex", alignItems: "center", paddingBottom: "50px" }}
-      >
-        {chartData && chartData?.labels?.length > 0 && (
-          <Bar
-            data={chartData}
-            width={100}
-            height={600}
-            options={{
-              maintainAspectRatio: false,
-              scales: {
-                y: {
-                  min: 0,
-                  max: 10,
-                },
-              },
-            }}
+      <AppUserLayout>
+        {/* ------------------- Chart Points -------------- */}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <label style={{ marginRight: "10px" }}>Chart Points 2:</label>
+          <input
+            id="chartPoints"
+            type="range"
+            min="1"
+            max="30"
+            value={numberChartPoints}
+            onChange={(e) => setNumberChartPoints(Number(e.target.value))}
+            className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           />
-        )}
-      </div>
-      {/* ------------------- Chart -------------- */}
+          <label style={{ marginLeft: "10px" }}>{numberChartPoints}</label>
+        </div>
+        {/* ------------------- Chart Points -------------- */}
+
+        {/* ------------------- Type Chart -------------- */}
+        <div>
+          <label style={{ marginRight: "10px" }}>Select Values:</label>
+          <select
+            className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-6 rounded"
+            value={selectedValues}
+            onChange={(e) => setSelectedValues(e.target.value)}
+          >
+            <option value="ENERGY">Energy</option>
+            <option value="HAPPINESS">Happiness</option>
+            <option value="STRESS">Stress</option>
+          </select>
+        </div>
+        {/* ------------------- Type Chart -------------- */}
+
+        {/* ------------------- Date Picker -------------- */}
+        <div>
+          <label style={{ marginRight: "10px" }}>Min Date:</label>
+          <input
+            type="date"
+            value={minDate}
+            min={minDateTotalUser}
+            max={maxDateTotalUser}
+            onChange={(e) => setMinDate(e.target.value)}
+          />
+        </div>
+        <div>
+          <label style={{ marginRight: "10px" }}>Max Date:</label>
+          <input
+            type="date"
+            value={maxDate}
+            min={minDateTotalUser}
+            max={maxDateTotalUser}
+            onChange={(e) => setMaxDate(e.target.value)}
+          />
+        </div>
+        {/* ------------------- Date Picker -------------- */}
+
+        {/* ------------------- Chart -------------- */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            paddingBottom: "50px",
+          }}
+        >
+          {chartData && chartData?.labels?.length > 0 && (
+            <Bar
+              data={chartData}
+              width={100}
+              height={600}
+              options={{
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    min: 0,
+                    max: 10,
+                  },
+                },
+              }}
+            />
+          )}
+        </div>
+        {/* ------------------- Chart -------------- */}
+      </AppUserLayout>
     </>
   );
 };
