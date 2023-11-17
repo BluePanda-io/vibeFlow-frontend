@@ -100,10 +100,7 @@ const SignupCommunity: NextPageWithLayout = () => {
           </div>
           <p className="text-edenGray-700 mb-[10px] text-[10px] leading-[14px]">
             If you are a hiring manager login{" "}
-            <Link
-              href={"/developer-dao/jobs"}
-              className="hover:text-edenGray-500 underline"
-            >
+            <Link href={"/input"} className="hover:text-edenGray-500 underline">
               here
             </Link>
           </p>
