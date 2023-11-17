@@ -153,7 +153,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     <>
       {/* ------------------- Chart Points -------------- */}
       <div style={{ display: "flex", alignItems: "center" }}>
-        <label style={{ marginRight: "10px" }}>Chart Points:</label>
+        <label style={{ marginRight: "10px" }}>Chart Points 2:</label>
         <input
           id="chartPoints"
           type="range"
