@@ -19,7 +19,7 @@ const HomePage: NextPage = ({
     <>
       <SEO title={`Eden protocol`} />
       <Head>
-        <title>Eden protocol</title>
+        <title>Eden protocol 2</title>
       </Head>
       <div className={`min-h-screen overflow-hidden bg-[#fcf0f6]`}>
         <div className="mx-auto max-w-4xl py-8">
