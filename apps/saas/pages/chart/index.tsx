@@ -6,6 +6,7 @@ import Chart from "chart.js/auto";
 import React, { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
+// import { Chart } from "react-chartjs-2";
 import type { NextPageWithLayout } from "../_app";
 Chart.register(CategoryScale);
 
@@ -114,15 +115,27 @@ const ConnectTGPage: NextPageWithLayout = () => {
       console.log("data", data);
 
       // take only the timeStamp on an array
-      // const timeStampArray = data.showChartStateValues.map((item: any) => item.timeStamp)
+
       const timeStampArray = data.showChartStateValues.map((item: any) => {
         const date = new Date(item.timeStamp);
+        const minDate = new Date(data.showChartStateValues[0].timeStamp);
+        const maxDate = new Date(
+          data.showChartStateValues[
+            data.showChartStateValues.length - 1
+          ].timeStamp
+        );
+        const diffTime = Math.abs(maxDate.getTime() - minDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear().toString().slice(-2);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
 
-        return `${day}-${month}-${year}`;
+        return diffDays < 3
+          ? `${month}-${year} ${hours}:${minutes}`
+          : `${day}-${month}-${year}`;
       });
 
       console.log("timeStampArray", timeStampArray);
@@ -158,7 +171,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
       <AppUserLayout>
         {/* ------------------- Chart Points -------------- */}
         <div style={{ display: "flex", alignItems: "center" }}>
-          <label style={{ marginRight: "10px" }}>Chart Points 2:</label>
+          <label style={{ marginRight: "10px" }}>Chart Points:</label>
           <input
             id="chartPoints"
             type="range"
@@ -220,6 +233,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
         >
           {chartData && chartData?.labels?.length > 0 && (
             <Bar
+              // <Chart
               data={chartData}
               width={100}
               height={600}
