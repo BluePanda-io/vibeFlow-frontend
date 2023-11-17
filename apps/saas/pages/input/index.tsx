@@ -72,7 +72,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
 
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                Energy Level: {energy}
+                Energy Level: {energy} -
               </label>
               <div
                 style={{
