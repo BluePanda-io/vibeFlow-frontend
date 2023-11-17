@@ -42,6 +42,8 @@ const ConnectTGPage: NextPageWithLayout = () => {
   // const [minDate, setMinDate] = useState<any>("2023-11-10T13:59:53.121Z");
   // const [maxDate, setMaxDate] = useState<any>("2023-11-14T13:59:53.121Z");
   const [numberChartPoints, setNumberChartPoints] = useState<number>(0);
+  const [numberChartPointsMax, setNumberChartPointsMax] = useState<number>(0);
+
   const [minDate, setMinDate] = useState<any>("");
   const [maxDate, setMaxDate] = useState<any>("");
 
@@ -65,6 +67,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
       if (data?.findStateChartOptimalInfo) {
         if (data.findStateChartOptimalInfo?.chartPoints)
           setNumberChartPoints(data.findStateChartOptimalInfo.chartPoints);
+        setNumberChartPointsMax(data.findStateChartOptimalInfo.chartPoints);
 
         if (data.findStateChartOptimalInfo?.chartStartDate)
           setMinDate(data.findStateChartOptimalInfo.chartStartDate);
@@ -176,7 +179,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
             id="chartPoints"
             type="range"
             min="1"
-            max="30"
+            max={numberChartPointsMax}
             value={numberChartPoints}
             onChange={(e) => setNumberChartPoints(Number(e.target.value))}
             className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
