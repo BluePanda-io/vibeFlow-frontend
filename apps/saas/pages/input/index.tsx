@@ -72,24 +72,39 @@ const ConnectTGPage: NextPageWithLayout = () => {
 
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                Energy
+                Energy Level: {energy}
               </label>
-              <input
-                type="text"
-                id="first_name"
-                className="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="5"
-                required
-                value={energy}
-                onChange={(e) => setEnergy(e.target.value)}
-              ></input>
+              <div
+                style={{
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <input
+                  type="range"
+                  id="first_name"
+                  className="bg-gray-50 border border-gray-300 text-gray-500 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  min="1"
+                  max="10"
+                  placeholder="5"
+                  required
+                  value={energy}
+                  onChange={(e) => {
+                    setEnergy(e.target.value);
+                    navigator.vibrate(15); // Haptic feedback for mobile devices
+                  }}
+                ></input>
+              </div>
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                Happiness
+                Happiness Level {happiness}
               </label>
               <input
-                type="text"
+                type="range"
+                min="1"
+                max="10"
                 id="last_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="5"
@@ -100,10 +115,12 @@ const ConnectTGPage: NextPageWithLayout = () => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                Stress
+                Stress Level {stress}
               </label>
               <input
-                type="text"
+                type="range"
+                min="1"
+                max="10"
                 id="last_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="5"
