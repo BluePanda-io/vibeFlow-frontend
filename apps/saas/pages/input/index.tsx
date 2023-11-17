@@ -20,9 +20,9 @@ const SAVE_STATE_VALUE = gql`
 const ConnectTGPage: NextPageWithLayout = () => {
   const { currentUser } = useContext(UserContext);
 
-  const [energy, setEnergy] = useState("");
-  const [stress, setStress] = useState("");
-  const [happiness, setHappiness] = useState("");
+  const [energy, setEnergy] = useState("5");
+  const [stress, setStress] = useState("5");
+  const [happiness, setHappiness] = useState("5");
 
   const [saveStateData, {}] = useMutation(SAVE_STATE_VALUE, {});
 
@@ -83,8 +83,9 @@ const ConnectTGPage: NextPageWithLayout = () => {
               >
                 <input
                   type="range"
-                  id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-500 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  id="large-range"
+                  // className="bg-gray-50 border border-gray-300 text-gray-500 text-2xl rounded-lg cursor-pointer range-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className=" w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg dark:bg-gray-300"
                   min="1"
                   max="10"
                   placeholder="5"
@@ -106,7 +107,8 @@ const ConnectTGPage: NextPageWithLayout = () => {
                 min="1"
                 max="10"
                 id="last_name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                // className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className=" w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg dark:bg-gray-300"
                 placeholder="5"
                 required
                 value={happiness}
@@ -122,7 +124,8 @@ const ConnectTGPage: NextPageWithLayout = () => {
                 min="1"
                 max="10"
                 id="last_name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                // className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className=" w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg dark:bg-gray-300"
                 placeholder="5"
                 required
                 value={stress}
