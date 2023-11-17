@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
-import { SaasUserLayout } from "@eden/package-ui";
-import React, { useState } from "react";
+import { UserContext } from "@eden/package-context";
+import { AppUserLayout, SaasUserLayout } from "@eden/package-ui";
+import React, { useContext, useState } from "react";
 
 import type { NextPageWithLayout } from "../_app";
 
@@ -17,6 +18,8 @@ const SAVE_STATE_VALUE = gql`
 `;
 
 const ConnectTGPage: NextPageWithLayout = () => {
+  const { currentUser } = useContext(UserContext);
+
   const [energy, setEnergy] = useState("");
   const [stress, setStress] = useState("");
   const [happiness, setHappiness] = useState("");
@@ -30,7 +33,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402013",
+          userID: currentUser?._id,
           type: "ENERGY",
           value: parseInt(energy),
         },
@@ -40,7 +43,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402013",
+          userID: currentUser?._id,
           type: "STRESS",
           value: parseInt(stress),
         },
@@ -50,7 +53,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402013",
+          userID: currentUser?._id,
           type: "HAPPINESS",
           value: parseInt(happiness),
         },
@@ -60,70 +63,72 @@ const ConnectTGPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <form>
-        <div className="grid gap-6 mb-6 md:grid-cols-2 p-6">
-          <label className="block mb-2 text-xl font-medium text-gray-900 dark:text-black">
-            Flow of the Day
-          </label>
+      <AppUserLayout>
+        <form>
+          <div className="grid gap-6 mb-6 md:grid-cols-2 p-6">
+            <label className="block mb-2 text-xl font-medium text-gray-900 dark:text-black">
+              Flow of the Day
+            </label>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-              Energy
-            </label>
-            <input
-              type="text"
-              id="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="5"
-              required
-              value={energy}
-              onChange={(e) => setEnergy(e.target.value)}
-            ></input>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                Energy
+              </label>
+              <input
+                type="text"
+                id="first_name"
+                className="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="5"
+                required
+                value={energy}
+                onChange={(e) => setEnergy(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                Happiness
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="5"
+                required
+                value={happiness}
+                onChange={(e) => setHappiness(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                Stress
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="5"
+                required
+                value={stress}
+                onChange={(e) => setStress(e.target.value)}
+              ></input>
+            </div>
+            <div style={{ padding: "10px" }}></div>
+            <button
+              type="button"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => {
+                saveToBackend();
+                alert("Done ✅");
+                setEnergy("");
+                setStress("");
+                setHappiness("");
+              }}
+            >
+              Submit
+            </button>
           </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-              Happiness
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="5"
-              required
-              value={happiness}
-              onChange={(e) => setHappiness(e.target.value)}
-            ></input>
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-              Stress
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="5"
-              required
-              value={stress}
-              onChange={(e) => setStress(e.target.value)}
-            ></input>
-          </div>
-          <div style={{ padding: "10px" }}></div>
-          <button
-            type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => {
-              saveToBackend();
-              alert("Done ✅");
-              setEnergy("");
-              setStress("");
-              setHappiness("");
-            }}
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+        </form>
+      </AppUserLayout>
     </>
   );
 };

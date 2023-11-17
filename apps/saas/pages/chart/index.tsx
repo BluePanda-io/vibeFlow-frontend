@@ -1,8 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
+import { UserContext } from "@eden/package-context";
 import { AppUserLayout, SaasUserLayout } from "@eden/package-ui";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import type { NextPageWithLayout } from "../_app";
@@ -30,6 +31,8 @@ const FIND_STATE_CHART_OPTIMAL_INFO = gql`
 `;
 
 const ConnectTGPage: NextPageWithLayout = () => {
+  const { currentUser } = useContext(UserContext);
+
   const [chartData, setChartData] = useState<any>({});
 
   const [selectedValues, setSelectedValues] = useState<string>("HAPPINESS");
@@ -47,10 +50,11 @@ const ConnectTGPage: NextPageWithLayout = () => {
   const {} = useQuery(FIND_STATE_CHART_OPTIMAL_INFO, {
     variables: {
       fields: {
-        userID: "9302939402013",
+        userID: currentUser?._id,
         type: selectedValues,
       },
     },
+    skip: !currentUser?._id,
     onCompleted: (data) => {
       console.log(
         "data.findStateChartOptimalInfo = ",
@@ -96,7 +100,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
   } = useQuery(SHOW_CHART_STATE_VALUES, {
     variables: {
       fields: {
-        userID: "9302939402013",
+        userID: currentUser?._id,
         type: selectedValues,
         // startDate: "2023-11-10T13:59:53.121Z",
         startDate: minDate,
@@ -105,7 +109,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
         numberChartPoints: numberChartPoints,
       },
     },
-    skip: numberChartPoints == 0 || !minDate || !maxDate,
+    skip: numberChartPoints == 0 || !minDate || !maxDate || !currentUser?._id,
     onCompleted: (data) => {
       console.log("data", data);
 
