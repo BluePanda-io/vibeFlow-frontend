@@ -3,6 +3,8 @@ import { UserContext } from "@eden/package-context";
 import { AppUserLayout, SaasUserLayout } from "@eden/package-ui";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
+import { IncomingMessage, ServerResponse } from "http";
+import { getSession } from "next-auth/react";
 import React, { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -261,3 +263,26 @@ const ConnectTGPage: NextPageWithLayout = () => {
 ConnectTGPage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
 
 export default ConnectTGPage;
+
+export async function getServerSideProps(ctx: {
+  req: IncomingMessage;
+  res: ServerResponse;
+  query: { slug: string };
+}) {
+  const session = await getSession(ctx);
+
+  const url = ctx.req.url;
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/?redirect=${url}`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { key: url },
+  };
+}

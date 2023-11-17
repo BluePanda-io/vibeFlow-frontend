@@ -34,7 +34,7 @@ const HomePage: NextPage = ({
             Eden
           </h1>
           <h2 className="text-bold text-edenGreen-600 text-center text-2xl">
-            Talk to less, but more of the right candidates.
+            Time to check your Energy
           </h2>
           <section className="mb-4 grid grid-cols-12">
             <div className="col-span-4 flex items-center justify-center">
@@ -63,7 +63,7 @@ const HomePage: NextPage = ({
           </section>
           {!redirect.includes("/interview/") && (
             <section>
-              <div className="grid grid-cols-12 gap-12">
+              {/* <div className="grid grid-cols-12 gap-12">
                 <div className="col-span-4">
                   <div>
                     <h3 className="text-edenGreen-600 mb-4 text-center text-4xl">
@@ -85,8 +85,8 @@ const HomePage: NextPage = ({
                     </h3>
                   </div>
                 </div>
-              </div>
-              <div className="grid grid-cols-12 gap-12">
+              </div> */}
+              {/* <div className="grid grid-cols-12 gap-12">
                 <div className="col-span-4 h-full">
                   <div className="h-full bg-[#F9E1ED] px-2 py-2 pb-8 text-center">
                     <p className="mb-4">
@@ -132,7 +132,7 @@ const HomePage: NextPage = ({
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </section>
           )}
         </div>
