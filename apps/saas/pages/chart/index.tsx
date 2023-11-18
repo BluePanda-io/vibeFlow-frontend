@@ -138,7 +138,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
         const minutes = date.getMinutes();
 
         return diffDays < 3
-          ? `${day}-${month} ${hours}:${minutes}`
+          ? `${day}-${month} / ${hours}:${minutes}`
           : `${day}-${month}-${year}`;
       });
 
